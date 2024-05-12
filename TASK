@@ -1,0 +1,23 @@
+-- Task 1
+SELECT product_id, 
+	CASE WHEN category = '-' THEN 'Unknown' ELSE category END AS category,
+	animal,
+	CASE WHEN price = 'unlisted' then 0 else price::numeric end as price,
+	sales,
+	CASE WHEN rating IS NULL THEN 0 ELSE rating END AS rating,
+	INITCAP(size) as size
+FROM pet_supplies
+
+-- Task 2
+SELECT animal, 
+ 	repeat_purchase,
+	ROUND(AVG(sales)) as avg_sales,
+	ROUND(MIN(sales)) as min_sales,
+	ROUND(MAX(sales)) as max_sales
+FROM pet_supplies
+GROUP BY animal, repeat_purchase
+
+-- Task 3
+SELECT product_id, sales, rating
+FROM pet_supplies
+WHERE animal in ('Cat', 'Dog') and repeat_purchase = 1
